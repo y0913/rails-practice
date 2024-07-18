@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::API
+    include ActionController::Cookies
     def create_token(user_id)
         payload = {user_id: user_id, exp: (DateTime.current + 14.days).to_i}
         secret_key = Rails.application.credentials.secret_key_base
         token = JWT.encode(payload, secret_key)
         return token
     end
+
     def authenticate
         authorization_header = request.headers[:authorization]
         if !authorization_header

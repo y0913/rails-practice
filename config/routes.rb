@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :health_check
       resources :users, only: %i[create update]
-      post 'login', to: 'authentication#login'
+      resources :check
+      post '/auth', to: 'sessions#create'
+      get '/refresh', to: 'sessions#refresh'
     end
   end
   # Defines the root path route ("/")
